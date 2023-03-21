@@ -38,6 +38,7 @@ import {
 } from "@chakra-ui/react";
 import React from "react";
 import { useForm, Resolver } from "react-hook-form";
+import ViewInvoice from "../components/viewInvoice";
 
 enum Currency {
   USD = "USD",
@@ -79,8 +80,8 @@ type FormValues = {
     invoiceDate: string;
     dueDate: string;
     projectDescription: string;
-    from: Object; //ContractorDetails
-    to: Object; //ClientDetails
+    fromAddress: Object; //ContractorDetails
+    toAddress: Object; //ClientDetails
     terms: string;
     notes: string;
     invoiceItems: {
@@ -1194,6 +1195,7 @@ export default function InvoiceForm() {
             </TableContainer>
           </GridItem>
         </SimpleGrid>
+        <ViewInvoice />
       </Box>
     </Box>
   );
