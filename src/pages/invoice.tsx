@@ -37,8 +37,77 @@ import {
   TableContainer,
 } from "@chakra-ui/react";
 import React from "react";
+import { useForm, Resolver } from "react-hook-form";
+
+enum Currency {
+  USD = "USD",
+  EUR = "EUR",
+  GBP = "GBP",
+  INR = "INR",
+}
+
+type FormValues = {
+  clientDetails: {
+    firstName: string;
+    lastName: string;
+    organization: string;
+    email: string;
+    country: string;
+    streetAddress: string;
+    city: string;
+    state: string;
+    zip: string;
+    taxId: string;
+    walletAddress: string;
+  };
+  contractorDetails: {
+    firstName: string;
+    lastName: string;
+    organization: string;
+    email: string;
+    country: string;
+    streetAddress: string;
+    city: string;
+    state: string;
+    zip: string;
+    taxId: string;
+    walletAddress: string;
+  };
+
+  invoiceSummary: {
+    invoiceNumber: string;
+    invoiceDate: string;
+    dueDate: string;
+    projectDescription: string;
+    from: Object; //ContractorDetails
+    to: Object; //ClientDetails
+    terms: string;
+    notes: string;
+    invoiceItems: {
+      item: string;
+      description: string;
+      quantity: number;
+      price: string;
+      amount: number;
+      discount: number;
+      tax: number;
+    }[];
+    currency: Currency;
+    amountDue: number;
+    totalAmount: number;
+    AmountWithouTax: number;
+    totalTax: number;
+  };
+};
 
 export default function InvoiceForm() {
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm();
+
   return (
     <Box
       bg="#edf3f8"
@@ -136,6 +205,7 @@ export default function InvoiceForm() {
                       type="text"
                       name="first_name"
                       id="first_name"
+                      {...register("first", { required: true })}
                       autoComplete="given-name"
                       mt={1}
                       focusBorderColor="brand.400"
@@ -1082,7 +1152,7 @@ export default function InvoiceForm() {
                     <Td isNumeric>20</Td>
                     <Td isNumeric>120</Td>
                   </Tr>
-                
+
                   <Tr>
                     <Td></Td>
                     <Td></Td>
@@ -1120,7 +1190,6 @@ export default function InvoiceForm() {
                     <Td isNumeric>$---</Td>
                   </Tr>
                 </Tbody>
-                
               </Table>
             </TableContainer>
           </GridItem>

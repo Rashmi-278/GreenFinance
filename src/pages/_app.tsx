@@ -1,14 +1,23 @@
-import { ChakraProvider } from '@chakra-ui/react'
+import { ChakraProvider } from "@chakra-ui/react";
 
-import theme from '../theme'
-import { AppProps } from 'next/app'
+import theme from "../theme";
+import { AppProps } from "next/app";
+import * as React from "react";
+import { PolybaseProvider, AuthProvider } from "@polybase/react";
+import { Polybase } from "@polybase/client";
+import { Auth } from "@polybase/auth";
 
-function MyApp({ Component, pageProps }: AppProps) {
+const polybase = new Polybase();
+const auth = typeof window !== "undefined" ? new Auth() : null;
+
+export default function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <ChakraProvider theme={theme}>
-      <Component {...pageProps} />
-    </ChakraProvider>
-  )
+    <PolybaseProvider polybase={polybase}>
+      <AuthProvider auth={auth} polybase={polybase}>
+        <ChakraProvider theme={theme}>
+          <Component {...pageProps} />
+        </ChakraProvider>
+      </AuthProvider>
+    </PolybaseProvider>
+  );
 }
-
-export default MyApp

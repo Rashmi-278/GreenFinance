@@ -14,7 +14,7 @@ import { Main } from '../components/Main'
 import { DarkModeSwitch } from '../components/DarkModeSwitch'
 import { CTA } from '../components/CTA'
 import { Footer } from '../components/Footer'
-
+import { AuthConnectButtons } from '../utils/auth'
 const Index = () => (
   <Container height="100vh">
     <Hero />
@@ -41,6 +41,7 @@ const Index = () => (
           <ChakraLink isExternal href="https://nextjs.org" flexGrow={1} mr={2}>
             Next.js <LinkIcon />
           </ChakraLink>
+          <AuthConnectButtons />
         </ListItem>
       </List>
     </Main>

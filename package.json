@@ -9,12 +9,19 @@
     "@chakra-ui/icons": "^2.0.2",
     "@chakra-ui/react": "^2.2.1",
     "@chakra-ui/theme-tools": "^2.0.2",
+    "@choc-ui/logo": "^1.0.0",
     "@emotion/react": "^11.9.0",
     "@emotion/styled": "^11.9.0",
+    "@polybase/auth": "^0.3.36",
+    "@polybase/client": "^0.3.36",
+    "@polybase/eth": "^0.3.36",
+    "@polybase/react": "^0.3.36",
     "framer-motion": "^6.3.0",
     "next": "latest",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-hook-form": "^7.43.7",
+    "react-icons": "^4.8.0"
   },
   "devDependencies": {
     "@types/node": "^18.0.0",
