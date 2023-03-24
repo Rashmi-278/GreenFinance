@@ -7,6 +7,7 @@ import {
   Image,
   Flex,
   VStack,
+  HStack,
   Button,
   Heading,
   SimpleGrid,
@@ -18,7 +19,10 @@ import {
 } from "@chakra-ui/react";
 import { FaInstagram, FaTwitter, FaYoutube } from "react-icons/fa";
 import { MdLocalShipping } from "react-icons/md";
-import DePay from "./Depay";
+import dynamic from "next/dynamic";
+// dyanmic import of the DePay widget
+const DePay = dynamic(() => import("./Depay"), { ssr: false });
+
 export default function ViewInvoice(Invoice: any) {
   return (
     <Container maxW={"7xl"}>
@@ -65,6 +69,17 @@ export default function ViewInvoice(Invoice: any) {
               />
             }
           >
+            <VStack spacing={{ base: 4, sm: 6 }} alignItems={"flex-start"}>
+              <Text
+                color={useColorModeValue("gray.500", "gray.400")}
+                fontSize={"md"}
+                fontWeight={"300"}
+              >
+                Issued on {Invoice.issuedOn} 23 February 2021
+              </Text>
+              <Heading fontSize={"sm"}>From</Heading>
+              <Text fontSize={"md"}>John Doe</Text>
+            </VStack>
             <VStack spacing={{ base: 4, sm: 6 }}>
               <Text
                 color={useColorModeValue("gray.500", "gray.400")}
@@ -181,8 +196,7 @@ export default function ViewInvoice(Invoice: any) {
           >
             Pay ${Invoice.amountDue}
           </Button> */}
-          <DePay pay={20} />
-
+          <DePay amount={20} />
         </Stack>
       </SimpleGrid>
     </Container>
