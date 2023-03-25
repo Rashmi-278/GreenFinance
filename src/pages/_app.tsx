@@ -7,6 +7,7 @@ import { PolybaseProvider, AuthProvider } from "@polybase/react";
 import { Polybase } from "@polybase/client";
 import { Auth } from "@polybase/auth";
 import { AppProvider } from "../utils/state";
+import { load } from "../utils/schemaLoad";
 const polybase = new Polybase();
 const auth = typeof window !== "undefined" ? new Auth() : null;
 
@@ -22,4 +23,10 @@ export default function MyApp({ Component, pageProps }: AppProps) {
       </PolybaseProvider>
     </AppProvider>
   );
+}
+
+export async function getServerSideProps({ req, res }) {
+  console.log("getServerSideProps");
+   await load();
+    return { props: {} };
 }

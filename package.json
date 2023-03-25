@@ -3,7 +3,9 @@
   "scripts": {
     "dev": "next",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "load": "ts-node ./src/utils/schemaLoad.tsx"
+
   },
   "dependencies": {
     "@chakra-ui/icons": "^2.0.2",

@@ -1,7 +1,9 @@
 import * as React from "react";
 import { Button, ButtonGroup } from "@chakra-ui/react";
 import { useAuth } from "@polybase/react";
+import { Polybase } from "@polybase/client";
 
+const polybase = new Polybase();
 export const AuthConnectButtons = () => {
   const { auth, state, loading } = useAuth();
 
@@ -18,3 +20,16 @@ export const AuthConnectButtons = () => {
     </ButtonGroup>
   );
 };
+
+// export default async function load() {
+//   const db = new Polybase({
+//     defaultNamespace: "greenfinance",
+//     signer: async (data) => {
+//       return { h: "eth-personal-sign", sig: await auth.ethPersonalSign(data) };
+//     },
+//   });
+
+//   await db.applySchema(schema, "greenfinance");
+
+//   return "Schema loaded";
+// }
