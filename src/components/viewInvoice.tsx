@@ -22,8 +22,10 @@ import { MdLocalShipping } from "react-icons/md";
 import dynamic from "next/dynamic";
 // dyanmic import of the DePay widget
 const DePay = dynamic(() => import("./Depay"), { ssr: false });
-
+import { useAppState } from "../utils/state";
 export default function ViewInvoice(Invoice: any) {
+  const [state, setState] = useAppState();
+
   return (
     <Container maxW={"7xl"}>
       <SimpleGrid

@@ -80,13 +80,10 @@ type FormValues = {
 
   invoiceSummary: {
     invoiceNumber: string;
-    issuedOn: string;
+    issuedDate: string;
     dueDate: string;
-    projectDescription: string;
     fromAddress: Object; //ContractorDetails
     toAddress: Object; //ClientDetails
-    terms: string;
-    notes: string;
     invoiceItems: {
       item: string;
       description: string;
@@ -96,7 +93,7 @@ type FormValues = {
       discount: number;
       tax: number;
     }[];
-    currency: Currency;
+    currency: Currency.USD;
     amountDue: number;
     totalAmount: number;
     AmountWithouTax: number;
