@@ -14,7 +14,6 @@ import { Main } from "../components/Main";
 import { DarkModeSwitch } from "../components/DarkModeSwitch";
 import { CTA } from "../components/CTA";
 import { Footer } from "../components/Footer";
-import {load} from "../utils/schemaLoad";
 export default function Index() {
 
   
@@ -61,10 +60,4 @@ export default function Index() {
     </Container>
   );
 
-}
-
-async function getServerSideProps({ req, res }) {
-  console.log("getServerSideProps");
-   load().then(console.log).catch(console.error);
-    return { props: {} };
 }
