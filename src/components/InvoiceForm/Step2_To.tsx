@@ -342,6 +342,32 @@ export default function Step2_To() {
                     {...register("toTaxID", { required: true })}
                   />
                 </FormControl>
+                <FormControl as={GridItem} colSpan={[6, 4]}>
+                  <FormLabel
+                    htmlFor="wallet_address"
+                    fontSize="sm"
+                    fontWeight="md"
+                    color="gray.700"
+                    _dark={{
+                      color: "gray.50",
+                    }}
+                  >
+                    Wallet Address
+                  </FormLabel>
+                  <Input
+                    type="text"
+                    name="tax_number"
+                    id="from_tax_number"
+                    autoComplete="text"
+                    mt={1}
+                    focusBorderColor="brand.400"
+                    shadow="sm"
+                    size="sm"
+                    w="full"
+                    rounded="md"
+                    {...register("toWalletAddress", { required: true })}
+                  />
+                </FormControl>
               </SimpleGrid>
             </Stack>
             <Box

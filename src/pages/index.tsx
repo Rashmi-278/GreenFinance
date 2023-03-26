@@ -23,12 +23,12 @@ export default function Index() {
     <Container height="100vh">
       <Hero />
       <Main>
-        <Text color="text" mt={5}>
+        <Text color="text" mt={4}>
           This project was made with <Code>Next.js</Code> + <Code>chakra-ui</Code> +{" "}
           <Code>TypeScript</Code>.
         </Text>
 
-        <List spacing={3} my={0} color="text" mt={5}>
+        <List spacing={3} my={0} color="text" mt={4}>
           <ListItem>
             <ListIcon as={CheckCircleIcon} color="green.500" />
             <ChakraLink

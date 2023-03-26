@@ -46,8 +46,8 @@ import Step0 from "../components/InvoiceForm/Step0";
 import Header from "../components/Header";
 // dynamic import of DePayButtons
 import dynamic from "next/dynamic";
-const DePayButtons = dynamic(() => import("@depay/buttons"), { ssr: false });
-// import DePayButtons from "@depay/buttons";
+//const DePayButtons = dynamic(() => import("@depay/buttons"), { ssr: false });
+import DePayButtons from "@depay/buttons";
 import { useAppState } from "../utils/state";
 
 export default function InvoiceForm() {
