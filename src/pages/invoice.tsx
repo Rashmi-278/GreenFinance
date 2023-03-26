@@ -44,7 +44,10 @@ import Step2_To from "../components/InvoiceForm/Step2_To";
 import Step3_Work from "../components/InvoiceForm/Step3_Work";
 import Step0 from "../components/InvoiceForm/Step0";
 import Header from "../components/Header";
-import DePayButtons from "@depay/buttons";
+// dynamic import of DePayButtons
+import dynamic from "next/dynamic";
+const DePayButtons = dynamic(() => import("@depay/buttons"), { ssr: false });
+// import DePayButtons from "@depay/buttons";
 import { useAppState } from "../utils/state";
 
 export default function InvoiceForm() {
@@ -124,7 +127,7 @@ export default function InvoiceForm() {
           }}
         />
 
-        <DePayButtons.DePayButton
+        {/* <DePayButtons.DePayButton
           label={"Pay"}
           widget={"Payment"}
           configuration={{
@@ -139,7 +142,7 @@ export default function InvoiceForm() {
               currency: "USD",
             },
           }}
-        />
+        /> */}
       </Box>
     </>
   );
