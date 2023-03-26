@@ -53,6 +53,10 @@ Depay is payments tool discovered through ZkSync Ecosystem : https://ecosystem.z
 - Depay Button
 - Depay widget
 
+##### IPFS and Filecoin via Spheron Network
+- Deployed on Spheron
+
+
 
 # Example app with [chakra-ui](https://github.com/chakra-ui/chakra-ui) and TypeScript
 
