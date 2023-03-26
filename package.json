@@ -4,7 +4,7 @@
     "dev": "next",
     "build": "next build",
     "start": "next start",
-    "load": "ts-node ./src/utils/schemaLoad.tsx"
+    "load": "ts-node ./src/utils/database.tsx"
 
   },
   "dependencies": {

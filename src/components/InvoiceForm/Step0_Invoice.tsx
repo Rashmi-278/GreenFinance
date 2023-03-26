@@ -15,21 +15,68 @@ import {
 import { useForm } from "react-hook-form";
 import { useAppState } from "../../utils/state";
 import { useRouter } from "next/router";
-export default function Step1_From() {
-  const [state, setState] = useAppState();
+import { useAuth } from "@polybase/react";
+import { DBHandler } from "../../utils/database";
+const InvoiceReference = DBHandler.collection("Invoice");
+const UserReference = DBHandler.collection("User");
+
+const initInvoice = async (invoiceNumber, userId) => {
+  // generate invoice id of 10 digits
+  const invoiceId = Math.floor(Math.random() * 1000000000).toString();
+  // get date in string format
+  const issueDate = new Date().toLocaleDateString();
+  // get date plus 30 days in string format
+  const dueDate = new Date(
+    new Date().setDate(new Date().getDate() + 30)
+  ).toLocaleDateString();
+
+  const recordData = await InvoiceReference.create([
+    invoiceId,
+    invoiceNumber,
+    issueDate,
+    dueDate,
+  ]);
+
+  console.log("Invoice initialized: " + JSON.stringify(recordData));
+
+  // update user record with invoice id
+  const { data, block } = await InvoiceReference.record(invoiceId).get();
+  if (!data) {
+    console.error("No record found");
+    return;
+  } else {
+    console.log("Record found: " + JSON.stringify(data));
+    const recordData = await UserReference.record(userId).call(
+      "updateCreatedInvoices",
+      [invoiceId]
+    );
+    console.log("Record updated: " + JSON.stringify(recordData));
+  }
+};
+
+export default function Step0_Invoice() {
+  const [formstate, setformState] = useAppState();
   const router = useRouter();
+  let user;
+  const { auth, state } = useAuth();
+  auth?.onAuthUpdate((authState) => {
+    if (authState) {
+      user = authState;
+    }
+  });
+
   const {
     handleSubmit,
     register,
     watch,
     formState: { errors },
   } = useForm({ defaultValues: state, mode: "onSubmit" });
-  const watchPassword = watch("password");
 
   const saveData = (data) => {
-    setState({ ...state, from:{...data} });
+    setformState({ ...state, from: { ...data } });
     //router.push("/invoice/step2");
-    console.log(state.from.fromCity);
+    alert(user?.userId);
+    initInvoice(data.invoiceNumber, user?.userId);
   };
 
   return (
@@ -63,7 +110,7 @@ export default function Step1_From() {
                 color: "gray.400",
               }}
             >
-              Lorem Ipsum
+              Enter the invoice information
             </Text>
           </Box>
         </GridItem>
@@ -109,7 +156,7 @@ export default function Step1_From() {
                     type="number"
                     name="invoiceId"
                     id="invoiceId"
-                    {...register("invoiceId", {
+                    {...register("invoiceNumber", {
                       required: "This is required",
                     })}
                     mt={1}
@@ -142,10 +189,11 @@ export default function Step1_From() {
                     shadow="sm"
                     size="sm"
                     w="full"
+                    disabled
                     rounded="md"
-                    {...register("issuedDate", {
-                      required: "This is required",
-                    })}
+                    // {...register("issuedDate", {
+                    //   required: "This is required",
+                    // })}
                   />
                 </FormControl>
 
@@ -170,17 +218,17 @@ export default function Step1_From() {
                     shadow="sm"
                     size="sm"
                     w="full"
+                    disabled
                     rounded="md"
-                    {...register("dueDate", {
-                      required: "This is required",
-                    })}
+                    // {...register("dueDate", {
+                    //   required: "This is required",
+                    // })}
                   />
                 </FormControl>
-
 
                 <FormControl as={GridItem} colSpan={[6, 3]}>
                   <FormLabel
-                    htmlFor="notes"
+                    htmlFor="currency"
                     fontSize="sm"
                     fontWeight="md"
                     color="gray.700"
@@ -188,158 +236,20 @@ export default function Step1_From() {
                       color: "gray.50",
                     }}
                   >
-                    Country / Region
+                    Currency
                   </FormLabel>
                   <Input
                     type="text"
-                    name="country"
-                    id="from_country"
-                    autoComplete="country"
+                    name="currency"
+                    id="currency"
                     mt={1}
+                    disabled
                     focusBorderColor="brand.400"
                     shadow="sm"
                     size="sm"
                     w="full"
                     rounded="md"
-                    {...register("fromCountry", {
-                      required: "This is required",
-                    })}
-                  />
-                 
-                </FormControl>
-
-                <FormControl as={GridItem} colSpan={6}>
-                  <FormLabel
-                    htmlFor="street_address"
-                    fontSize="sm"
-                    fontWeight="md"
-                    color="gray.700"
-                    _dark={{
-                      color: "gray.50",
-                    }}
-                  >
-                    Street address
-                  </FormLabel>
-                  <Input
-                    type="text"
-                    name="street_address"
-                    id="from_street_address"
-                    autoComplete="street-address"
-                    mt={1}
-                    focusBorderColor="brand.400"
-                    shadow="sm"
-                    size="sm"
-                    w="full"
-                    rounded="md"
-                    {...register("fromStreet", { required: true })}
-                  />
-                </FormControl>
-
-                <FormControl as={GridItem} colSpan={[6, 6, null, 2]}>
-                  <FormLabel
-                    htmlFor="city"
-                    fontSize="sm"
-                    fontWeight="md"
-                    color="gray.700"
-                    _dark={{
-                      color: "gray.50",
-                    }}
-                  >
-                    City
-                  </FormLabel>
-                  <Input
-                    type="text"
-                    name="city"
-                    id="from_city"
-                    autoComplete="city"
-                    mt={1}
-                    focusBorderColor="brand.400"
-                    shadow="sm"
-                    size="sm"
-                    w="full"
-                    rounded="md"
-                    {...register("fromCity", { required: true })}
-                  />
-                </FormControl>
-
-                <FormControl as={GridItem} colSpan={[6, 3, null, 2]}>
-                  <FormLabel
-                    htmlFor="state"
-                    fontSize="sm"
-                    fontWeight="md"
-                    color="gray.700"
-                    _dark={{
-                      color: "gray.50",
-                    }}
-                  >
-                    State / Province
-                  </FormLabel>
-                  <Input
-                    type="text"
-                    name="state"
-                    id="from_state"
-                    autoComplete="state"
-                    mt={1}
-                    focusBorderColor="brand.400"
-                    shadow="sm"
-                    size="sm"
-                    w="full"
-                    rounded="md"
-                    {...register("fromState", { required: true })}
-                  />
-                </FormControl>
-
-                <FormControl as={GridItem} colSpan={[6, 3, null, 2]}>
-                  <FormLabel
-                    htmlFor="postal_code"
-                    fontSize="sm"
-                    fontWeight="md"
-                    color="gray.700"
-                    _dark={{
-                      color: "gray.50",
-                    }}
-                  >
-                    ZIP / Postal
-                  </FormLabel>
-                  <Input
-                    type="text"
-                    name="postal_code"
-                    id="from_postal_code"
-                    autoComplete="postal-code"
-                    mt={1}
-                    focusBorderColor="brand.400"
-                    shadow="sm"
-                    size="sm"
-                    w="full"
-                    rounded="md"
-                    {...register("fromPostal", { required: true })}
-                  />
-                </FormControl>
-
-                <FormControl as={GridItem} colSpan={[6, 4]}>
-                  <FormLabel
-                    htmlFor="email_address"
-                    fontSize="sm"
-                    fontWeight="md"
-                    color="gray.700"
-                    _dark={{
-                      color: "gray.50",
-                    }}
-                  >
-                    Tax nummber
-                  </FormLabel>
-                  <Input
-                    type="text"
-                    name="tax_number"
-                    id="from_tax_number"
-                    autoComplete="text"
-                    mt={1}
-                    focusBorderColor="brand.400"
-                    shadow="sm"
-                    size="sm"
-                    w="full"
-                    rounded="md"
-                    {...register("fromTaxID", { required: true })}
+                    // {...register("currency", { required: true })}
                   />
                 </FormControl>
               </SimpleGrid>

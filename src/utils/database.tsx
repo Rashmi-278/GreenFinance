@@ -1,15 +1,15 @@
 import { Polybase } from "@polybase/client";
-import { Auth } from "@polybase/auth";
+import { Auth } from '@polybase/auth'
 
-const auth = new Auth();
+const auth = typeof window !== "undefined" ? new Auth() : null;
 
-const db = new Polybase({
-  defaultNamespace: "greenFinance",
+export const DBHandler = new Polybase({
+  defaultNamespace:
+    "pk/0xc7385a050cbcb4565aaf52db136b04f47342ca7acc23cb160ca1cdc8ab97a4396bb8a8316a0628ba98b0c119f054ee35d65e474ed060fdb746dcecc77db5569a/GreenFinance",
+  signer: async (data) => {
+    return { h: "eth-personal-sign", sig: await auth.ethPersonalSign(data) };
+  },
 });
-
-
-
-// PK, need to establish a PK so we can control updates
 
 const schema = `
 @public
@@ -140,14 +140,15 @@ collection User {
     publicKey: string;
     username: string;
     email?: string;
-    createdInvoices: Invoice[];
-    receivedInvoices: Invoice[];
-    constructor (id: string, username: string, email: string) {
+  walletAddress: string;
+    createdInvoices?: Invoice[];
+    receivedInvoices?: Invoice[];
+    constructor (id: string, username: string, walletAddress: string) {
         this.id = id;
         this.publicKey = ctx.publicKey.toHex();
         this.username = username;
-        this.email = email;
-    }
+        this.walletAddress = walletAddress;
+  }
 
     updateCreateInvoices(invoice: Invoice) {
 
@@ -156,24 +157,19 @@ collection User {
         }
         this.createInvoices.push(invoice);
     }
+  updateReceivedInvoices(invoice: Invoice) {
+
+        if (this.publicKey != ctx.publicKey.toHex()) {
+            throw error ('invalid owner');
+        }
+        this.receivedInvoices.push(invoice);
+    }
 }
 
 `;
 
-export async function load() {
-  const db = new Polybase({
-    defaultNamespace: "greenfinance",
-    signer: async (data) => {
-      return { h: "eth-personal-sign", sig: await auth.ethPersonalSign(data) };
-    },
-  });
-
-  await db.applySchema(schema, "greenfinance");
-
+export async function loadSchema() {
+  await DBHandler.applySchema(schema, "greenfinance");
   return "Schema loaded";
 }
 
-
-load()
-  .then(console.log)
-  .catch(console.error)

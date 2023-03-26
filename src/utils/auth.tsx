@@ -1,35 +1,22 @@
 import * as React from "react";
 import { Button, ButtonGroup } from "@chakra-ui/react";
-import { useAuth } from "@polybase/react";
-import { Polybase } from "@polybase/client";
-
-const polybase = new Polybase();
+import { useAuth, useIsAuthenticated } from "@polybase/react";
 export const AuthConnectButtons = () => {
-  const { auth, state, loading } = useAuth();
+  const { auth } = useAuth();
+  const [isLoggedIn, loading] = useIsAuthenticated();
 
-  // `state` is null if not logged in, or logged in state e.g. { type: "metamask", userId: "..." }
-
-  // `auth` is the prop passed to AuthProvider as auth
-
+  if (loading) return <div>Loading...</div>;
   return (
     <ButtonGroup>
-      <Button onClick={() => auth.signIn()}>Sign In</Button>
-      <Button onClick={() => auth.signOut()}>Sign Out</Button>
-      {JSON.stringify(state)} 
-      <Button onClick={() => auth.ethPersonalSign("Dummy Dummy Data")}>Sign Data</Button>
+      {isLoggedIn ? (
+        <Button color={"red"} onClick={() => auth.signOut()}>
+          Sign Out
+        </Button>
+      ) : (
+        <Button color={"green"} onClick={() => auth.signIn()}>
+          Sign In
+        </Button>
+      )}
     </ButtonGroup>
   );
 };
-
-// export default async function load() {
-//   const db = new Polybase({
-//     defaultNamespace: "greenfinance",
-//     signer: async (data) => {
-//       return { h: "eth-personal-sign", sig: await auth.ethPersonalSign(data) };
-//     },
-//   });
-
-//   await db.applySchema(schema, "greenfinance");
-
-//   return "Schema loaded";
-// }

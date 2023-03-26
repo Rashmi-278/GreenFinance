@@ -38,10 +38,11 @@ import {
 } from "@chakra-ui/react";
 import React from "react";
 import { useForm, Resolver } from "react-hook-form";
-import ViewInvoice from "../components/viewInvoice";
+import ViewInvoice from "../components/Display/viewInvoice";
 import Step1_From from "../components/InvoiceForm/Step1_From";
 import Step2_To from "../components/InvoiceForm/Step2_To";
 import Step3_Work from "../components/InvoiceForm/Step3_Work";
+import Step0_Invoice from "../components/InvoiceForm/Step0_Invoice";
 
 enum Currency {
   USD = "USD",
@@ -117,7 +118,9 @@ export default function InvoiceForm() {
       }}
       p={10}
     >
-      <Text fontSize="4xl">Invoice #number </Text>
+      <Text fontSize="4xl">Create Invoice </Text>
+
+      <Step0_Invoice />
 
       <Divider
         my="5"

@@ -14,9 +14,11 @@ import { Main } from "../components/Main";
 import { DarkModeSwitch } from "../components/DarkModeSwitch";
 import { CTA } from "../components/CTA";
 import { Footer } from "../components/Footer";
-export default function Index() {
+import * as React from "react";
+import { AuthConnectButtons } from "../utils/auth";
 
-  
+
+export default function Index() {
   return (
     <Container height="100vh">
       <Hero />
@@ -49,6 +51,7 @@ export default function Index() {
               Next.js <LinkIcon />
             </ChakraLink>
           </ListItem>
+          <AuthConnectButtons />
         </List>
       </Main>
 
@@ -59,5 +62,4 @@ export default function Index() {
       <CTA />
     </Container>
   );
-
 }
