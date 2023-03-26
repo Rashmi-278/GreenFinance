@@ -2,11 +2,10 @@ import * as React from "react";
 import { Polybase } from "@polybase/client";
 import { AuthConnectButtons } from "../utils/auth";
 import { useAuth } from "@polybase/react";
-import { Button } from "@chakra-ui/react";
+import { Button, Center, Heading, VStack } from "@chakra-ui/react";
 import { useToast } from "@chakra-ui/react";
 import { DBHandler } from "../utils/database";
 import Header from "../components/Header";
-
 
 export default function createProfile() {
   let user;
@@ -24,7 +23,6 @@ export default function createProfile() {
   });
 
   const createProfile = async () => {
-
     if (readProfile(user.userId)) {
       toast({
         title: "Account exists.",
@@ -39,14 +37,14 @@ export default function createProfile() {
       user.userId,
       user.userId,
     ]);
-    
+
     toast({
-        title: "Account Created!",
-        description: "Now lets get started!",
-        status: "success",
-        duration: 9000,
-        isClosable: true,
-      });
+      title: "Account Created!",
+      description: "Now lets get started!",
+      status: "success",
+      duration: 9000,
+      isClosable: true,
+    });
     console.log("Record created: " + JSON.stringify(recordData));
   };
 
@@ -64,10 +62,18 @@ export default function createProfile() {
 
   return (
     <>
-    <Header/>
-      <AuthConnectButtons />
-      <Button onClick={() => createProfile()}>Create</Button>
-      <Button onClick={() => readProfile(user?.userId)}>Read</Button>
+      <Header />
+
+      <Center mt={20}>
+        <VStack>
+        <Heading>Create Profile</Heading>
+        <VStack>
+          <Button onClick={() => createProfile()}>Create</Button>
+          <Button onClick={() => readProfile(user?.userId)}>Read</Button>
+        </VStack>
+        </VStack>
+        
+      </Center>
     </>
   );
 }

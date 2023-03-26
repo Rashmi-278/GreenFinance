@@ -52,7 +52,7 @@ export default function Step2_To() {
         >
           <Box px={[4, 0]}>
             <Heading fontSize="lg" fontWeight="medium" lineHeight="6">
-              Client Information
+              Contractor Information
             </Heading>
             <Text
               mt={1}
@@ -62,7 +62,7 @@ export default function Step2_To() {
                 color: "gray.400",
               }}
             >
-              Lorem Ipsum
+              Enter the contractor information
             </Text>
           </Box>
         </GridItem>
@@ -326,7 +326,7 @@ export default function Step2_To() {
                       color: "gray.50",
                     }}
                   >
-                    Tax nummber
+                    Tax number
                   </FormLabel>
                   <Input
                     type="text"
@@ -358,7 +358,7 @@ export default function Step2_To() {
             >
               <Button
                 type="submit"
-                colorScheme="blue"
+                colorScheme="green"
                 _focus={{
                   shadow: "",
                 }}

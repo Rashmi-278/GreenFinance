@@ -68,15 +68,12 @@ export default function Step0_Invoice() {
   const {
     handleSubmit,
     register,
-    watch,
-    formState: { errors },
   } = useForm({ defaultValues: state, mode: "onSubmit" });
 
   const saveData = (data) => {
-    setformState({ ...state, from: { ...data } });
+    setformState({ ...formstate, from: { ...data } });
     //router.push("/invoice/step2");
     alert(user?.userId);
-    initInvoice(data.invoiceNumber, user?.userId);
   };
 
   return (
@@ -156,15 +153,14 @@ export default function Step0_Invoice() {
                     type="number"
                     name="invoiceId"
                     id="invoiceId"
-                    {...register("invoiceNumber", {
-                      required: "This is required",
-                    })}
+          
                     mt={1}
                     focusBorderColor="brand.400"
                     shadow="sm"
                     size="sm"
                     w="full"
                     rounded="md"
+                    // {...register('invoiceId', { required: true })} 
                   />
                 </FormControl>
 
@@ -268,7 +264,7 @@ export default function Step0_Invoice() {
             >
               <Button
                 type="submit"
-                colorScheme="blue"
+                colorScheme="green"
                 _focus={{
                   shadow: "",
                 }}

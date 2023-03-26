@@ -306,7 +306,7 @@ export default function Step3_Work() {
               >
                 <Button
                   type="submit"
-                  colorScheme="blue"
+                  colorScheme="green"
                   _focus={{
                     shadow: "",
                   }}
@@ -407,7 +407,7 @@ export default function Step3_Work() {
                     <Td></Td>
                     <Td></Td>
                     <Td>Amount Without Tax</Td>
-                    <Td isNumeric>$---</Td>
+                    <Td isNumeric>$40000</Td>
                   </Tr>
                   <Tr>
                     <Td></Td>
@@ -416,7 +416,7 @@ export default function Step3_Work() {
                     <Td></Td>
                     <Td></Td>
                     <Td>Total Tax Amount</Td>
-                    <Td isNumeric>$---</Td>
+                    <Td isNumeric>$4000</Td>
                   </Tr>
                   <Tr>
                     <Td></Td>
@@ -425,7 +425,7 @@ export default function Step3_Work() {
                     <Td></Td>
                     <Td></Td>
                     <Td>Total Amount</Td>
-                    <Td isNumeric>$---</Td>
+                    <Td isNumeric>$44000</Td>
                   </Tr>
                   <Tr>
                     <Td></Td>
@@ -434,7 +434,7 @@ export default function Step3_Work() {
                     <Td></Td>
                     <Td></Td>
                     <Td>Amount Due</Td>
-                    <Td isNumeric>$---</Td>
+                    <Td isNumeric>$44000</Td>
                   </Tr>
                 </Tbody>
               </Table>
@@ -453,7 +453,7 @@ export default function Step3_Work() {
           textAlign="right"
         >
           <Button
-            colorScheme="blue"
+            colorScheme="green"
             _focus={{
               shadow: "",
             }}

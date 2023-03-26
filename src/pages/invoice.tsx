@@ -42,65 +42,10 @@ import ViewInvoice from "../components/Display/viewInvoice";
 import Step1_From from "../components/InvoiceForm/Step1_From";
 import Step2_To from "../components/InvoiceForm/Step2_To";
 import Step3_Work from "../components/InvoiceForm/Step3_Work";
-import Step0_Invoice from "../components/InvoiceForm/Step0_Invoice";
-
-enum Currency {
-  USD = "USD",
-  EUR = "EUR",
-  GBP = "GBP",
-  INR = "INR",
-}
-
-type FormValues = {
-  clientDetails: {
-    firstName: string;
-    lastName: string;
-    organization: string;
-    email: string;
-    country: string;
-    streetAddress: string;
-    city: string;
-    state: string;
-    zip: string;
-    taxId: string;
-    walletAddress: string;
-  };
-  contractorDetails: {
-    firstName: string;
-    lastName: string;
-    organization: string;
-    email: string;
-    country: string;
-    streetAddress: string;
-    city: string;
-    state: string;
-    zip: string;
-    taxId: string;
-    walletAddress: string;
-  };
-
-  invoiceSummary: {
-    invoiceNumber: string;
-    issuedDate: string;
-    dueDate: string;
-    fromAddress: Object; //ContractorDetails
-    toAddress: Object; //ClientDetails
-    invoiceItems: {
-      item: string;
-      description: string;
-      quantity: number;
-      price: string;
-      amount: number;
-      discount: number;
-      tax: number;
-    }[];
-    currency: Currency.USD;
-    amountDue: number;
-    totalAmount: number;
-    AmountWithouTax: number;
-    totalTax: number;
-  };
-};
+import Step0 from "../components/InvoiceForm/Step0";
+import Header from "../components/Header";
+import DePayButtons from "@depay/buttons";
+import { useAppState } from "../utils/state";
 
 export default function InvoiceForm() {
   const {
@@ -109,65 +54,93 @@ export default function InvoiceForm() {
     watch,
     formState: { errors },
   } = useForm();
+  const [state, State] = useAppState();
 
   return (
-    <Box
-      bg="#edf3f8"
-      _dark={{
-        bg: "#111",
-      }}
-      p={10}
-    >
-      <Text fontSize="4xl">Create Invoice </Text>
-
-      <Step0_Invoice />
-
-      <Divider
-        my="5"
-        borderColor="gray.300"
+    <>
+      <Header />
+      <Box
+        bg="#edf3f8"
         _dark={{
-          borderColor: "whiteAlpha.300",
+          bg: "#111",
         }}
-        visibility={{
-          base: "hidden",
-          sm: "visible",
-        }}
-      />
+        p={10}
+      >
+        <Text fontSize="4xl">Create Invoice </Text>
 
-      <Step1_From />
+        <Step0 />
 
-     
+        <Divider
+          my="5"
+          borderColor="gray.300"
+          _dark={{
+            borderColor: "whiteAlpha.300",
+          }}
+          visibility={{
+            base: "hidden",
+            sm: "visible",
+          }}
+        />
 
-      <Divider
-        my="5"
-        borderColor="gray.300"
-        _dark={{
-          borderColor: "whiteAlpha.300",
-        }}
-        visibility={{
-          base: "hidden",
-          sm: "visible",
-        }}
-      />
+        <Step1_From />
 
-      <Step2_To />
+        <Divider
+          my="5"
+          borderColor="gray.300"
+          _dark={{
+            borderColor: "whiteAlpha.300",
+          }}
+          visibility={{
+            base: "hidden",
+            sm: "visible",
+          }}
+        />
 
-      
+        <Step2_To />
 
-      <Divider
-        my="5"
-        borderColor="gray.300"
-        _dark={{
-          borderColor: "whiteAlpha.300",
-        }}
-        visibility={{
-          base: "hidden",
-          sm: "visible",
-        }}
-      />
+        <Divider
+          my="5"
+          borderColor="gray.300"
+          _dark={{
+            borderColor: "whiteAlpha.300",
+          }}
+          visibility={{
+            base: "hidden",
+            sm: "visible",
+          }}
+        />
 
-      <Step3_Work />
-      
-    </Box>
+        <Step3_Work />
+
+        <Divider
+          my="5"
+          borderColor="gray.300"
+          _dark={{
+            borderColor: "whiteAlpha.300",
+          }}
+          visibility={{
+            base: "hidden",
+            sm: "visible",
+          }}
+        />
+
+        <DePayButtons.DePayButton
+          label={"Pay"}
+          widget={"Payment"}
+          configuration={{
+            accept: [
+              {
+                blockchain: "ethereum",
+                token: "0xa0bEd124a09ac2Bd941b10349d8d224fe3c955eb",
+                receiver: "0x86b9eA8f3fb705fCFAfbAD59D48A869d79972eeF",
+              },
+            ],
+            amount: {
+              currency: "USD",
+            },
+          }}
+        />
+      </Box>
+    </>
   );
 }

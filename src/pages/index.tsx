@@ -23,42 +23,41 @@ export default function Index() {
     <Container height="100vh">
       <Hero />
       <Main>
-        <Text color="text">
-          Example repository of <Code>Next.js</Code> + <Code>chakra-ui</Code> +{" "}
+        <Text color="text" mt={5}>
+          This project was made with <Code>Next.js</Code> + <Code>chakra-ui</Code> +{" "}
           <Code>TypeScript</Code>.
         </Text>
 
-        <List spacing={3} my={0} color="text">
+        <List spacing={3} my={0} color="text" mt={5}>
           <ListItem>
             <ListIcon as={CheckCircleIcon} color="green.500" />
             <ChakraLink
               isExternal
-              href="https://chakra-ui.com"
+              href="https://polybase.xyz/"
               flexGrow={1}
               mr={2}
             >
-              Chakra UI <LinkIcon />
+              Polybase <LinkIcon />
             </ChakraLink>
           </ListItem>
           <ListItem>
             <ListIcon as={CheckCircleIcon} color="green.500" />
             <ChakraLink
               isExternal
-              href="https://nextjs.org"
+              href="https://depay.fi/"
               flexGrow={1}
               mr={2}
             >
-              Next.js <LinkIcon />
+              Depay Finance <LinkIcon />
             </ChakraLink>
           </ListItem>
-          <AuthConnectButtons />
         </List>
       </Main>
 
-      <DarkModeSwitch />
-      <Footer>
+      {/* <DarkModeSwitch /> */}
+      {/* <Footer>
         <Text>Next ❤️ Chakra</Text>
-      </Footer>
+      </Footer> */}
       <CTA />
     </Container>
   );

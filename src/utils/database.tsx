@@ -1,5 +1,5 @@
 import { Polybase } from "@polybase/client";
-import { Auth } from '@polybase/auth'
+import { Auth } from "@polybase/auth";
 
 const auth = typeof window !== "undefined" ? new Auth() : null;
 
@@ -100,30 +100,35 @@ collection Invoice {
     invoiceNumber: string;
     issuedDate: string;
     dueDate: string;
-    fromAddress: Organization;
-    toAddress: Organization;
-    invoiceItems: Item[];
+    fromAddress?: Organization;
+    toAddress?: Organization;
+    invoiceItems?: Item[];
     currency: string;
-    amountDue: number;
-    totalAmount: number;
-    AmountWithouTax: number;
-    totalTax: number;
+    amountDue?: number;
+    totalAmount?: number;
+    AmountWithouTax?: number;
+    totalTax?: number;
     publicKey: string;
-    constructor (id: string, invoiceNumber: string, issuedDate: string, dueDate: string, fromAddress: Organization, toAddress: Organization, invoiceItems: Item[], currency: string, amountDue: number, totalAmount: number, AmountWithouTax: number, totalTax: number) {
+    constructor (id: string, invoiceNumber: string, issuedDate: string, dueDate: string) {
         this.id = id;
         this.invoiceNumber = invoiceNumber;
         this.issuedDate = issuedDate;
         this.dueDate = dueDate;
-        this.fromAddress = fromAddress;
-        this.toAddress = toAddress;
-        this.invoiceItems = invoiceItems;
-        this.currency = currency;
-        this.amountDue = amountDue;
-        this.totalAmount = totalAmount;
-        this.AmountWithouTax = AmountWithouTax;
-        this.totalTax = totalTax;
+        this.currency = 'USD';
         this.publicKey = ctx.publicKey.toHex();
     }   
+  setFromAddress (fromAddress: Organization){
+        if (this.publicKey != ctx.publicKey.toHex()) {
+            throw error ('invalid owner');
+        }
+          this.fromAddress = fromAddress;
+  }
+  setToAddress (toAddress: Organization){
+        if (this.publicKey != ctx.publicKey.toHex()) {
+            throw error ('invalid owner');
+        }
+          this.toAddress = toAddress;
+  }
 
     setInvoiceNumber(invoiceNumber: string) {
         if (this.publicKey != ctx.publicKey.toHex()) {
@@ -131,6 +136,22 @@ collection Invoice {
         }
         this.invoiceNumber = invoiceNumber;
     }
+  updateInvoiceItem ( invoiceItems: Item[]){
+     if (this.publicKey != ctx.publicKey.toHex()) {
+            throw error ('invalid owner');
+        }
+        this.invoiceItems = invoiceItems;
+    
+  }
+  updateInvoiceSummary( amountDue: number, totalAmount: number, AmountWithouTax: number, totalTax: number) {
+     if (this.publicKey != ctx.publicKey.toHex()) {
+            throw error ('invalid owner');
+        }
+     this.amountDue = amountDue;
+        this.totalAmount = totalAmount;
+        this.AmountWithouTax = AmountWithouTax;
+        this.totalTax = totalTax;
+  }
 }
 
 
@@ -138,38 +159,40 @@ collection Invoice {
 collection User {
     id: string;
     publicKey: string;
-    username: string;
     email?: string;
-  walletAddress: string;
-    createdInvoices?: Invoice[];
-    receivedInvoices?: Invoice[];
-    constructor (id: string, username: string, walletAddress: string) {
+    walletAddress: string;
+    createdInvoices?: string[];
+    receivedInvoices?: string[];
+    constructor (id: string,  walletAddress: string) {
         this.id = id;
         this.publicKey = ctx.publicKey.toHex();
-        this.username = username;
         this.walletAddress = walletAddress;
+      this.createdInvoices = [];
+      this.receivedInvoices = [];
   }
 
-    updateCreateInvoices(invoice: Invoice) {
+    updateCreatedInvoices(invoiceId: string) {
 
         if (this.publicKey != ctx.publicKey.toHex()) {
             throw error ('invalid owner');
         }
-        this.createInvoices.push(invoice);
+        this.createdInvoices.push(invoiceId);
     }
-  updateReceivedInvoices(invoice: Invoice) {
+    updateReceivedInvoices(invoiceId: string) {
 
         if (this.publicKey != ctx.publicKey.toHex()) {
             throw error ('invalid owner');
         }
-        this.receivedInvoices.push(invoice);
+        this.receivedInvoices.push(invoiceId);
     }
 }
 
 `;
 
 export async function loadSchema() {
-  await DBHandler.applySchema(schema, "greenfinance");
+  await DBHandler.applySchema(
+    schema,
+    "pk/0xc7385a050cbcb4565aaf52db136b04f47342ca7acc23cb160ca1cdc8ab97a4396bb8a8316a0628ba98b0c119f054ee35d65e474ed060fdb746dcecc77db5569a/GreenFinance"
+  );
   return "Schema loaded";
 }
-

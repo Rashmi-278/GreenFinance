@@ -15,6 +15,14 @@ import {
 import { useForm } from "react-hook-form";
 import { useAppState } from "../../utils/state";
 import { useRouter } from "next/router";
+
+import { useAuth, useIsAuthenticated } from "@polybase/react";
+import { DBHandler } from "../../utils/database";
+
+const InvoiceReference = DBHandler.collection("Invoice");
+const OrganizationReference = DBHandler.collection("Organization");
+const UserReference = DBHandler.collection("User");
+
 export default function Step1_From() {
   const [state, setState] = useAppState();
   const router = useRouter();
@@ -63,7 +71,7 @@ export default function Step1_From() {
                 color: "gray.400",
               }}
             >
-              Lorem Ipsum
+              Enter Client details
             </Text>
           </Box>
         </GridItem>
@@ -328,7 +336,7 @@ export default function Step1_From() {
                       color: "gray.50",
                     }}
                   >
-                    Tax nummber
+                    Tax number
                   </FormLabel>
                   <Input
                     type="text"
@@ -360,7 +368,7 @@ export default function Step1_From() {
             >
               <Button
                 type="submit"
-                colorScheme="blue"
+                colorScheme="green"
                 _focus={{
                   shadow: "",
                 }}

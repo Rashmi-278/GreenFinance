@@ -1,3 +1,59 @@
+# Green Finance : Web3 Invoicing Platform
+
+###### Buidl in progress
+
+### Intro
+
+Invoicing is an essential part of any business, as it facilitates payment processing and helps keep track of financial transactions. However, traditional invoicing processes can be cumbersome, time-consuming, and prone to errors. With the advent of Web3 tools, businesses now have access to a more efficient and secure invoicing platform.
+
+Web3 tools are built on blockchain technology, which offers transparency, security, and decentralization. By leveraging the power of Web3, businesses can create an invoicing platform that is more reliable, streamlined, and cost-effective. The platform allows for instant payment processing, automatic reconciliation, and real-time tracking of payments.
+
+In addition, the Web3 invoicing platform enables businesses to transact in a more transparent and secure manner. By using smart contracts, businesses can establish trust with their customers, eliminating the need for intermediaries and reducing the risk of fraud. The platform also allows for more flexible payment options, including cryptocurrencies, which can help businesses expand their customer base and reach a global audience.
+
+### Features
+
+- Web3 wallet and email signin
+- Create Invoice with all the neccessary details
+
+###### buidling
+- Profile dashboard to list invoices
+- Pay the invoice with Crypto , powered by Depay
+
+### Pages
+
+/ - Landing page
+Home page for Green Finance
+
+/createProfile
+
+/invoice - Create Invoice
+Create an invoice
+
+More pages to be added
+
+#### Things worked on during hack
+
+##### Frontend
+- Landing page
+- Chakra UI Components
+- Invoice form
+- Stepper invoice form
+- react-hook-form connect
+- context API for Global state management
+
+##### Polybase
+- Authentication
+- Schema
+- Functions to update
+- Read function and validation
+- Write function and validation
+
+##### ZkSync via Depay
+Depay is payments tool discovered through ZkSync Ecosystem : https://ecosystem.zksync.io/
+- Depay Button
+- Depay widget
+
+
 # Example app with [chakra-ui](https://github.com/chakra-ui/chakra-ui) and TypeScript
 
 This example features how to use [chakra-ui](https://github.com/chakra-ui/chakra-ui) as the component library within a Next.js app with TypeScript.
